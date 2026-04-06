@@ -56,3 +56,19 @@ progress {
   margin-bottom: 10px;
   color: #94a3b8;
 }
+
+.surahProgress {
+  direction: ltr;
+  border-radius: 7px;
+  width: 50%;
+  height: 10px;
+  appearance: none;
+}
+
+.surahProgress::-webkit-progress-value {
+  background-color: red !important;
+}
+
+.surahProgress ::-moz-progress-bar {
+  background-color: red !important;
+}
