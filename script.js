@@ -1,128 +1,40 @@
-const surahs = [
-  "الفاتحة",
-  "البقرة",
-  "آل عمران",
-  "النساء",
-  "المائدة",
-  "الأنعام",
-  "الأعراف",
-  "الأنفال",
-  "التوبة",
-  "يونس",
-  "هود",
-  "يوسف",
-  "الرعد",
-  "إبراهيم",
-  "الحجر",
-  "النحل",
-  "الإسراء",
-  "الكهف",
-  "مريم",
-  "طه",
-  "الأنبياء",
-  "الحج",
-  "المؤمنون",
-  "النور",
-  "الفرقان",
-  "الشعراء",
-  "النمل",
-  "القصص",
-  "العنكبوت",
-  "الروم",
-  "لقمان",
-  "السجدة",
-  "الأحزاب",
-  "سبأ",
-  "فاطر",
-  "يس",
-  "الصافات",
-  "ص",
-  "الزمر",
-  "غافر",
-  "فصلت",
-  "الشورى",
-  "الزخرف",
-  "الدخان",
-  "الجاثية",
-  "الأحقاف",
-  "محمد",
-  "الفتح",
-  "الحجرات",
-  "ق",
-  "الذاريات",
-  "الطور",
-  "النجم",
-  "القمر",
-  "الرحمن",
-  "الواقعة",
-  "الحديد",
-  "المجادلة",
-  "الحشر",
-  "الممتحنة",
-  "الصف",
-  "الجمعة",
-  "المنافقون",
-  "التغابن",
-  "الطلاق",
-  "التحريم",
-  "الملك",
-  "القلم",
-  "الحاقة",
-  "المعارج",
-  "نوح",
-  "الجن",
-  "المزمل",
-  "المدثر",
-  "القيامة",
-  "الإنسان",
-  "المرسلات",
-  "النبأ",
-  "النازعات",
-  "عبس",
-  "التكوير",
-  "الانفطار",
-  "المطففين",
-  "الانشقاق",
-  "البروج",
-  "الطارق",
-  "الأعلى",
-  "الغاشية",
-  "الفجر",
-  "البلد",
-  "الشمس",
-  "الليل",
-  "الضحى",
-  "الشرح",
-  "التين",
-  "العلق",
-  "القدر",
-  "البينة",
-  "الزلزلة",
-  "العاديات",
-  "القارعة",
-  "التكاثر",
-  "العصر",
-  "الهمزة",
-  "الفيل",
-  "قريش",
-  "الماعون",
-  "الكوثر",
-  "الكافرون",
-  "النصر",
-  "المسد",
-  "الإخلاص",
-  "الفلق",
-  "الناس",
-];
+// async function getSurahs() {
+//   try {
+//     const response = await fetch("https://api.alquran.cloud/v1/surah");
+//     const result = await response.json();
+//
+//     if (result.code == 200) {
+//       const surahs = result.data.map((surah) => ({
+//         name: surah.name,
+//         verses: surah.numberOfAyahs,
+//       }));
+//       console.table(surahs);
+//       return surahs;
+//     } else {
+//       console.error("Server replied with code " + result.code);
+//     }
+//   } catch (err) {
+//     console.erreror("Error loading: " + err);
+//   }
+// }
+// surahs_promise = getSurahs();
+
+const TOTAL_SURAH = 114;
+const TOTAL_AYATS = 6236;
 
 const container = document.getElementById("list");
 const countText = document.getElementById("count");
 const progressBar = document.getElementById("progressBar");
 
 let saved = localStorage.getItem("progress");
+let saved_per_surah = localStorage.getItem("progressPerSurah");
 
 if (!saved) {
-  saved = "0".repeat(114);
+  saved = "0".repeat(TOTAL_SURAH);
+}
+
+if (!saved_per_surah) {
+  saved_per_surah = Array(TOTAL_SURAH).fill(0);
 }
 
 let checkedCount = 0;
@@ -132,18 +44,25 @@ function Prog() {
   progressBar.value = checkedCount;
 }
 
-surahs.forEach((name, index) => {
+QURAN_REG.forEach((surah, index) => {
   const div = document.createElement("div");
   const checkbox = document.createElement("input");
   const label = document.createElement("label");
+  const surahProgress = document.createElement("progress");
   const span = document.createElement("span");
+
   div.className = "surah";
   checkbox.type = "checkbox";
-  label.textContent = index + 1 + ". " + name;
+  label.textContent = index + 1 + ". " + surah.name;
   span.className = "done";
+
+  surahProgress.className = "surahProgress";
+  surahProgress.value = saved_per_surah[index];
+  surahProgress.max = surah.numberOfAyahs;
 
   if (saved[index] === "1") {
     checkbox.checked = true;
+    surahProgress.hidden = true;
     span.textContent = " 🤲 تمت القراءة";
     checkedCount++;
   }
@@ -152,10 +71,12 @@ surahs.forEach((name, index) => {
     let arr = saved.split("");
 
     if (this.checked) {
+      surahProgress.hidden = true;
       span.textContent = " 🤲 تمت القراءة";
       arr[index] = "1";
       checkedCount++;
     } else {
+      surahProgress.hidden = false;
       span.textContent = "";
       arr[index] = "0";
       checkedCount--;
@@ -163,11 +84,13 @@ surahs.forEach((name, index) => {
 
     saved = arr.join("");
     localStorage.setItem("progress", saved);
+    localStorage.setItem("progressPerSurah", saved_per_surah);
     Prog();
   });
 
   div.appendChild(checkbox);
   div.appendChild(label);
+  div.appendChild(surahProgress);
   div.appendChild(span);
   container.appendChild(div);
 });
