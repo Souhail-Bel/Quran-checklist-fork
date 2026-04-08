@@ -26,20 +26,15 @@ const container = document.getElementById("list");
 const countText = document.getElementById("count");
 const progressBar = document.getElementById("progressBar");
 
-let saved = localStorage.getItem("progress");
-let saved_per_surah = localStorage.getItem("progressPerSurah");
+let saved = localStorage.getItem("progress") || "0".repeat(TOTAL_SURAH);
 
-if (!saved) {
-  saved = "0".repeat(TOTAL_SURAH);
-}
-
-if (!saved_per_surah) {
-  saved_per_surah = Array(TOTAL_SURAH).fill(0);
-}
+let saved_per_surah =
+  JSON.parse(localStorage.getItem("progressPerSurah")) ||
+  Array(TOTAL_SURAH).fill(0);
 
 let checkedCount = 0;
 
-function Prog() {
+function updateProgress() {
   countText.textContent = checkedCount;
   progressBar.value = checkedCount;
 }
@@ -53,17 +48,18 @@ QURAN_REG.forEach((surah, index) => {
 
   div.className = "surah";
   checkbox.type = "checkbox";
-  label.textContent = index + 1 + ". " + surah.name;
+  label.textContent = index + 1 + ". " + sanitizeText(surah.name);
   span.className = "done";
 
   surahProgress.className = "surahProgress";
-  surahProgress.value = saved_per_surah[index];
   surahProgress.max = surah.numberOfAyahs;
+  surahProgress.value = saved_per_surah[index];
 
   if (saved[index] === "1") {
     checkbox.checked = true;
     surahProgress.hidden = true;
     span.textContent = " 🤲 تمت القراءة";
+    saved_per_surah[index] = surah.numberOfAyahs;
     checkedCount++;
   }
 
@@ -74,18 +70,20 @@ QURAN_REG.forEach((surah, index) => {
       surahProgress.hidden = true;
       span.textContent = " 🤲 تمت القراءة";
       arr[index] = "1";
+      saved_per_surah[index] = surah.numberOfAyahs;
       checkedCount++;
     } else {
       surahProgress.hidden = false;
       span.textContent = "";
       arr[index] = "0";
+      saved_per_surah[index] = 0;
       checkedCount--;
     }
 
     saved = arr.join("");
     localStorage.setItem("progress", saved);
-    localStorage.setItem("progressPerSurah", saved_per_surah);
-    Prog();
+    localStorage.setItem("progressPerSurah", JSON.stringify(saved_per_surah));
+    updateProgress();
   });
 
   div.appendChild(checkbox);
@@ -95,4 +93,4 @@ QURAN_REG.forEach((surah, index) => {
   container.appendChild(div);
 });
 
-Prog();
+updateProgress();

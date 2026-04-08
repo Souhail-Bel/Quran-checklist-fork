@@ -1,5 +1,11 @@
-// https://api.alquran.cloud/v1/surah
+function sanitizeText(text) {
+  // Replace Quranic sukun with standard sukun
+  const res = text.replace("\u06e1", "\u0652");
 
+  return res;
+}
+
+// https://api.alquran.cloud/v1/surah
 const QURAN_REG = [
   {
     name: "\u0633\u064f\u0648\u0631\u064e\u0629\u064f \u0671\u0644\u0652\u0641\u064e\u0627\u062a\u0650\u062d\u064e\u0629\u0650",
