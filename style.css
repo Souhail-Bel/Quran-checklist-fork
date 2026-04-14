@@ -10,7 +10,7 @@ h1 {
   color: #22c55e;
 }
 
-.c1 {
+.main-container {
   max-width: 600px;
   margin: auto;
   background: #1e293b;
@@ -43,7 +43,7 @@ input {
   font-size: 0.9em;
 }
 
-.c3 {
+.progress-wrapper {
   margin-bottom: 15px;
 }
 
@@ -52,7 +52,7 @@ progress {
   height: 20px;
 }
 
-.c2 {
+.basmalah {
   margin-bottom: 10px;
   color: #94a3b8;
 }
@@ -71,4 +71,26 @@ progress {
 
 .surahProgress ::-moz-progress-bar {
   background-color: red !important;
+}
+
+.ayat-input {
+  width: 50px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: white;
+  border-radius: 4px;
+  padding: 4px;
+  margin: 0 5px;
+  text-align: center;
+}
+
+.ayat-input::-webkit-inner-spin-button,
+.ayat-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ayat-input {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
