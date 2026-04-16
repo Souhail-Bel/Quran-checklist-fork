@@ -1,0 +1,11 @@
+{
+    "name" : "Quran Checklist",
+    "short_name":"Checklist",
+    "start_url" : "/",
+    "icons" : [{
+        "src" : "quran.com.ico",
+        "type" : "image/x-icon",
+        "sizes" : "48x48"
+    }],
+    "display" : "standalone"
+}
