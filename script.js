@@ -59,7 +59,7 @@ QURAN_REG.forEach((surah, index) => {
     surahProgress.hidden = true;
     span.textContent = " 🤲 تم الحفظ";
     saved_per_surah[index] = surah.numberOfAyahs;
-
+  }
 
   // Store references for applyRemoteState
   surahElems[index] = { checkbox, surahProgress, span, ayatInput };
@@ -79,7 +79,6 @@ QURAN_REG.forEach((surah, index) => {
       checkbox.checked = true;
       surahProgress.hidden = true;
       span.textContent = " 🤲 تم الحفظ";
-
     } else {
       checkbox.checked = false;
       surahProgress.hidden = false;
@@ -137,8 +136,6 @@ function applyRemoteState(remoteArray) {
       checkbox.checked = true;
       surahProgress.hidden = true;
       span.textContent = " 🤲 تم الحفظ";
-
-      
     } else {
       checkbox.checked = false;
       surahProgress.hidden = false;
