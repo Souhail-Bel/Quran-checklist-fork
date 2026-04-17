@@ -1,2 +1,2 @@
 [build]
-    command = 'echo "window.BACKEND_URL = '$BACKEND_URL';" > config.js'
+  command = "echo \"window.BACKEND_URL = '$BACKEND_URL';\" > config.js"
