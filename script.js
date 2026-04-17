@@ -59,7 +59,15 @@ QURAN_REG.forEach((surah, index) => {
     surahProgress.hidden = true;
     span.textContent = " 🤲 تم الحفظ";
     saved_per_surah[index] = surah.numberOfAyahs;
-  }
+    // Duaa right after memorizing
+    const duaa = confirm("اللهم إني أستودعتك ما قرأت وما حفظت وما تعلمت فرده عند حاجتي إليه إنك على كل شيء قدير");
+    if (duaa) {
+    // User clicked OK
+    console.log("تقبل الله منا ومنكم!");
+    } else {
+    // User clicked Cancel
+    console.log("الحمد لله");
+    }}
 
   // Store references for applyRemoteState
   surahElems[index] = { checkbox, surahProgress, span, ayatInput };
@@ -79,6 +87,15 @@ QURAN_REG.forEach((surah, index) => {
       checkbox.checked = true;
       surahProgress.hidden = true;
       span.textContent = " 🤲 تم الحفظ";
+      // Duaa right after memorizing
+      const duaa = confirm("اللهم إني أستودعتك ما قرأت وما حفظت وما تعلمت فرده عند حاجتي إليه إنك على كل شيء قدير");
+      if (duaa) {
+          // User clicked OK
+          console.log("تقبل الله منا ومنكم!");
+      } else {
+          // User clicked Cancel
+          console.log("الحمد لله");
+      }
     } else {
       checkbox.checked = false;
       surahProgress.hidden = false;
@@ -92,6 +109,16 @@ QURAN_REG.forEach((surah, index) => {
     if (this.checked) {
       surahProgress.hidden = true;
       span.textContent = " 🤲 تم الحفظ";
+      // Duaa right after memorizing
+      const duaa = confirm("اللهم إني أستودعتك ما قرأت وما حفظت وما تعلمت فرده عند حاجتي إليه إنك على كل شيء قدير");
+
+      if (duaa) {
+          // User clicked OK
+          console.log("تقبل الله منا ومنكم!");
+      } else {
+          // User clicked Cancel
+          console.log("الحمد لله");
+      }
       saved_per_surah[index] = surah.numberOfAyahs;
       ayatInput.value = surah.numberOfAyahs;
     } else {
@@ -135,6 +162,17 @@ function applyRemoteState(remoteArray) {
       checkbox.checked = true;
       surahProgress.hidden = true;
       span.textContent = " 🤲 تم الحفظ";
+      // Duaa right after memorizing
+      const duaa = confirm("اللهم إني أستودعتك ما قرأت وما حفظت وما تعلمت فرده عند حاجتي إليه إنك على كل شيء قدير");
+      
+      if (duaa) {
+          // User clicked OK
+          console.log("تقبل الله منا ومنكم!");
+      } else {
+          // User clicked Cancel
+          console.log("الحمد لله");
+      }
+      
     } else {
       checkbox.checked = false;
       surahProgress.hidden = false;
