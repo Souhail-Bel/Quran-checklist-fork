@@ -1,4 +1,4 @@
-const CACHE = "check-v1.2";
+const CACHE = "check-v1.3";
 const ASSETS = [
   "/",
   "/index.html",
